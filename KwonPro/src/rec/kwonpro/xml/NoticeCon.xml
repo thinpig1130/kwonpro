@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="rec.kwonpro.dao.NoticeDAO"> 
+<resultMap id ="result" type="notice"> 
+	<result property = "id" column = "ID"/> 
+	<result property = "title" column = "TITLE"/> 
+	<result property = "writerId" column = "WRITER_ID"/> 
+	<result property = "content" column = "CONTENT"/> 
+	<result property = "regdate" column = "REGDATE"/>
+	<result property = "hit" column = "HIT"/> 
+	<result property = "files" column = "FILES"/>
+</resultMap>
+
+<select id = "list" resultMap="result">
+	<![CDATA[
+	SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES
+	from NOTICE order by REGDATE DESC
+	]]>
+</select>
+
+<update id ="upHit" parameterType="int">
+	<![CDATA[
+	UPDATE NOTICE SET HIT = HIT+1 WHERE ID = #{value} 
+	]]>
+</update>
+
+<select id = "contentView" parameterType="int" resultMap="result">
+	<![CDATA[
+	SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES
+	FROM NOTICE WHERE ID=#{value}
+	]]>
+</select>
+
+<insert id="write" parameterType="notice">
+	<![CDATA[
+	INSERT INTO NOTICE (ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES) 
+	VALUES (NOTICE_ID_SEQ.NEXTVAL, #{title}, #{writerId}, #{content}, SYSDATE, 0 ,#{files})
+	]]>
+</insert> 
+
+</mapper> 
