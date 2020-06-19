@@ -23,6 +23,12 @@ from NOTICE order by REGDATE desc;
     delete from notice;
     delete from notice where id=2;
     
+    UPDATE NOTICE 
+	SET TITLE='나를 소개합니다', CONTENT='나는 지금', FILES='' 
+	WHERE ID=24;
+    
+    ROLLBACK;
+    
     commit;
     
     SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES
