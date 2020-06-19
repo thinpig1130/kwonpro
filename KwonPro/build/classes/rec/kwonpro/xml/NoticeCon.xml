@@ -13,10 +13,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property = "files" column = "FILES"/>
 </resultMap>
 
-<select id = "list" resultMap="result">
+<select id = "list" parameterType="int" resultMap="result">
 	<![CDATA[
-	SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES
-	from NOTICE order by REGDATE DESC
+		SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES FROM(
+	    SELECT ROW_NUMBER() OVER (ORDER BY REGDATE DESC) NUM, NOTICE.* 
+	    FROM NOTICE
+		)WHERE NUM BETWEEN 1+((#{value}-1)*10) AND #{value}*10
 	]]>
 </select>
 
@@ -26,10 +28,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	]]>
 </update>
 
-<select id = "contentView" parameterType="int" resultMap="result">
+<select id = "curNotice" parameterType="int" resultMap="result">
 	<![CDATA[
 	SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES
 	FROM NOTICE WHERE ID=#{value}
+	]]>
+</select>
+
+<select id = "nextNotice" parameterType="int" resultMap="result">
+	<![CDATA[
+	SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES FROM NOTICE
+	WHERE ID = ( 
+		SELECT ID FROM NOTICE 
+		WHERE REGDATE > (SELECT REGDATE FROM NOTICE WHERE ID=#{value})
+		AND ROWNUM=1)
+	]]>
+</select>
+<select id = "preNotice" parameterType="int" resultMap="result">
+	<![CDATA[
+	SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES FROM NOTICE
+	WHERE ID = ( SELECT ID FROM (SELECT * FROM NOTICE ORDER BY REGDATE DESC)
+		WHERE REGDATE < (SELECT REGDATE FROM NOTICE WHERE ID=#{value}) AND ROWNUM=1) 
 	]]>
 </select>
 
@@ -38,6 +57,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	INSERT INTO NOTICE (ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES) 
 	VALUES (NOTICE_ID_SEQ.NEXTVAL, #{title}, #{writerId}, #{content}, SYSDATE, 0 ,#{files})
 	]]>
-</insert> 
+</insert>
+
+<delete id="delete" parameterType="int">
+	<![CDATA[
+	DELETE FROM NOTICE WHERE id=#{value}
+	]]>
+</delete>
+
+<update id="update" parameterType="notice">
+	<![CDATA[
+	UPDATE NOTICE SET TITLE=#{title}, CONTENT=#{CONTNET}, FILES=#{FILES} 
+	WHERE ID=#{id}
+	]]>
+</update>
+
 
 </mapper> 

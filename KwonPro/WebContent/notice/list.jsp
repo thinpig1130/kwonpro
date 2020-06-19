@@ -28,7 +28,7 @@
             <!-- ---------------------------<header>--------------------------------------- -->
 
             <h1 id="logo">
-                <a href="/index.html">
+                <a href="/index.do">
                     <img src="/images/logo.png" alt="KwonPro 온라인" />
                 </a>
             </h1>
@@ -39,10 +39,10 @@
                 <nav id="main-menu">
                     <h1>메인메뉴</h1>
                     <ul>
-                        <li><a href="/guide">모임가이드</a></li>
+                        <li><a href="/warn.html">모임가이드</a></li>
 
-                        <li><a href="/course">모임선택</a></li>
-                        <li><a href="/answeris/index">AnswerIs</a></li>
+                        <li><a href="/warn.html">모임선택</a></li>
+                        <li><a href="/warn.html">AnswerIs</a></li>
                     </ul>
                 </nav>
 
@@ -50,7 +50,7 @@
 
                     <section id="search-form">
                         <h1>강좌검색 폼</h1>
-                        <form action="/course">
+                        <form action="">
                             <fieldset>
                                 <legend>모임검색필드</legend>
                                 <label>모임검색</label>
@@ -63,17 +63,17 @@
                     <nav id="acount-menu">
                         <h1 class="hidden">회원메뉴</h1>
                         <ul>
-                            <li><a href="/index.html">HOME</a></li>
-                            <li><a href="/member/login.html">로그인</a></li>
-                            <li><a href="/member/agree.html">회원가입</a></li>
+                            <li><a href="/index.do">HOME</a></li>
+                            <li><a href="">로그인</a></li>
+                            <li><a href="">회원가입</a></li>
                         </ul>
                     </nav>
 
                     <nav id="member-menu" class="linear-layout">
                         <h1 class="hidden">고객메뉴</h1>
                         <ul class="linear-layout">
-                            <li><a href="/member/home"><img src="/images/txt-mypage.png" alt="마이페이지" /></a></li>
-                            <li><a href="/notice/list.html"><img src="/images/txt-customer.png" alt="고객센터" /></a></li>
+                            <li><a href=""><img src="/images/txt-mypage.png" alt="마이페이지" /></a></li>
+                            <li><a href="/nlist.do"><img src="/images/txt-customer.png" alt="고객센터" /></a></li>
                         </ul>
                     </nav>
 
@@ -105,10 +105,9 @@
 					<h1>메뉴</h1>
 					<ul>
 						<li><a class="current"  href="/nlist.do">공지사항</a></li>
-						<li><a class=""  href="/customer/faq">자주하는 질문</a></li>
-						<li><a class="" href="/customer/question">모임문의</a></li>
-						<li><a class="" href="/customer/event">이벤트/번개</a></li>
-						
+						<li><a class=""  href="/warn.html">자주하는 질문</a></li>
+						<li><a class="" href="/warn.html">모임문의</a></li>
+						<li><a class="" href="/warn.html">이벤트/번개</a></li>
 					</ul>
 				</nav>
 
@@ -176,7 +175,7 @@
 							<td class="title indent text-align-left"><a href="ndetail.do?nid=${notice.id}">${notice.title}</a></td>
 							<td>${notice.writerId}</td>
 							<td>
-								${notice.regdate}		
+								${notice.simpledate}		
 							</td>
 							<td>${notice.hit}</td>
 						</tr>
@@ -185,7 +184,9 @@
 					</tbody>
 				</table>
 			</div>
-			
+			<div class="indexer margin-top align-left">
+				<a class="btn-text btn-default" href="/nwrite.do">글쓰기</a>
+			</div>
 			<div class="indexer margin-top align-right">
 				<h3 class="hidden">현재 페이지</h3>
 				<div><span class="text-orange text-strong">1</span> / 1 pages</div>
@@ -200,8 +201,7 @@
 		
 	</div>
 	<ul class="-list- center">
-		<li><a class="-text- orange bold" href="?p=1&t=&q=" >1</a></li>
-				
+		<li><a class="-text- orange bold" href="?page=1" >1</a></li>				
 	</ul>
 	<div>
 		

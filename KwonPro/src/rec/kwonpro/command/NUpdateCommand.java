@@ -9,20 +9,25 @@ import rec.kwonpro.common.MyUtils;
 import rec.kwonpro.dao.NoticeDAO;
 import rec.kwonpro.dto.Notice;
 
-public class NDetailCommand implements Command {
+public class NUpdateCommand implements Command {
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		int nid = Integer.parseInt(request.getParameter("nid"));
 		SqlSession session = MyUtils.getSession(); 
 		NoticeDAO dao = session.getMapper(NoticeDAO.class);
-		dao.upHit(nid);
-		Notice dto = dao.curNotice(nid);
-		Notice preDto = dao.preNotice(nid);
-		Notice nextDto = dao.nextNotice(nid);
-		request.setAttribute("notice", dto);
-		request.setAttribute("nextNotice", nextDto);
-		request.setAttribute("preNotice", preDto);
+		Notice vo = new Notice();
+		vo.setId(Integer.parseInt(request.getParameter("id")));
+		vo.setTitle(request.getParameter("title"));
+		vo.setContent(request.getParameter("content"));
+		String file = request.getParameter("newfile");
+		if(file.equals("")) {
+			vo.setFiles(request.getParameter("file"));
+		}else {
+			vo.setFiles(file);
+		}
 		
+		System.out.println(vo);
+		dao.update(vo);
 		session.close();
 	}
 

@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import rec.kwonpro.command.Command;
+import rec.kwonpro.command.NDeleteCommand;
 import rec.kwonpro.command.NDetailCommand;
+import rec.kwonpro.command.NEditCommand;
 import rec.kwonpro.command.NListCommand;
+import rec.kwonpro.command.NRegCommand;
+import rec.kwonpro.command.NUpdateCommand;
 
 
 @WebServlet("*.do")
@@ -43,9 +47,11 @@ public class ProSiteController extends HttpServlet {
 		String conPath = request.getContextPath();
 		String com = uri.substring(conPath.length());
 		
-		
-		
-		if(com.equals("/nlist.do")) {
+		if(com.equals("/index.do")) {
+			command = new NListCommand();
+			command.execute(request, response);
+			viewPage = "home.jsp";
+		}else if(com.equals("/nlist.do")) {
 			command = new NListCommand();
 			command.execute(request, response);
 			viewPage = "notice/list.jsp";
@@ -54,6 +60,24 @@ public class ProSiteController extends HttpServlet {
 			command.execute(request, response);
 			System.out.println(com);
 			viewPage="notice/detail.jsp";
+		}else if(com.equals("/nwrite.do")){
+			viewPage="notice/reg.jsp";
+		}else if(com.equals("/nreg.do")) {
+			command = new NRegCommand();
+			command.execute(request, response);
+			viewPage="nlist.do";
+		}else if(com.equals("/nedit.do")) {
+			command = new NEditCommand();
+			command.execute(request, response);
+			viewPage="notice/edit.jsp";
+		}else if(com.equals("/ndelete.do")) {
+			command = new NDeleteCommand();
+			command.execute(request, response);
+			viewPage="nlist.do";
+		}else if(com.equals("/nupdate.do")) {
+			command = new NUpdateCommand();
+			command.execute(request, response);
+			viewPage="ndetail.do?nid="+request.getParameter("id");
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

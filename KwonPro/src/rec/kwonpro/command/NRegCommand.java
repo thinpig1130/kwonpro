@@ -1,29 +1,29 @@
 package rec.kwonpro.command;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.ibatis.session.SqlSession;
+
 import rec.kwonpro.common.MyUtils;
 import rec.kwonpro.dao.NoticeDAO;
 import rec.kwonpro.dto.Notice;
 
-public class NListCommand implements Command {
+public class NRegCommand implements Command {
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println(request.getParameter("page"));
-		String strPage = request.getParameter("page");
-		int page;
-		if (strPage == null || strPage.equals("")) {
-			page = 1;
-		}else {
-			page = Integer.parseInt(strPage);			
-		}
-		
 		SqlSession session = MyUtils.getSession(); 
 		NoticeDAO dao = session.getMapper(NoticeDAO.class);
-		ArrayList<Notice> dtos = dao.list(page);
-		request.setAttribute("list", dtos);
+		Notice vo = new Notice();
+		vo.setTitle(request.getParameter("title"));
+		vo.setFiles(request.getParameter("file"));
+		vo.setContent(request.getParameter("content"));
+		vo.setWriterId(request.getParameter("writerid"));
+		System.out.println("여기가 보를 찍음");
+		System.out.println(vo);
+		dao.write(vo);
+		session.close();
 	}
+
 }

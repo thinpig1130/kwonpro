@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -9,12 +10,10 @@
     
     <link href="/css/customer/layout.css" type="text/css" rel="stylesheet" />
     <style>
-    
         #visual .content-container{	
             height:inherit;
             display:flex; 
             align-items: center;
-            
             background: url("../../images/customer/visual.png") no-repeat center;
         }
     </style>
@@ -23,7 +22,7 @@
 <body>
     <!-- header 부분 -->
 
-	 <header id="header">
+    <header id="header">
         
         <div class="content-container">
             <!-- ---------------------------<header>--------------------------------------- -->
@@ -40,10 +39,10 @@
                 <nav id="main-menu">
                     <h1>메인메뉴</h1>
                     <ul>
-                        <li><a href="">모임가이드</a></li>
+                        <li><a href="/warn.html">모임가이드</a></li>
 
-                        <li><a href="">모임선택</a></li>
-                        <li><a href="">AnswerIs</a></li>
+                        <li><a href="/warn.html">모임선택</a></li>
+                        <li><a href="/warn.html">AnswerIs</a></li>
                     </ul>
                 </nav>
 
@@ -51,7 +50,7 @@
 
                     <section id="search-form">
                         <h1>강좌검색 폼</h1>
-                        <form action="/warn.html">
+                        <form action="">
                             <fieldset>
                                 <legend>모임검색필드</legend>
                                 <label>모임검색</label>
@@ -84,7 +83,7 @@
         </div>
         
     </header>
-    
+
 	<!-- --------------------------- <visual> --------------------------------------- -->
 	<!-- visual 부분 -->
 	
@@ -112,6 +111,7 @@
 					</ul>
 				</nav>
 
+
 	<nav class="menu">
 		<h1>협력기관</h1>
 		<ul>
@@ -124,77 +124,54 @@
 			</aside>
 			<!-- --------------------------- main --------------------------------------- -->
 
-			<main>
-				<h2 class="main title">공지사항</h2>
-				
-				<div class="breadcrumb">
-					<h3 class="hidden">breadlet</h3>
-					<ul>
-						<li>home</li>
-						<li>고객센터</li>
-						<li>공지사항</li>
-					</ul>
-				</div>
 
-				<div class="margin-top first">
-						<h3 class="hidden">공지사항 내용</h3>
-						<table class="table">
-							<tbody>
-								<tr>
-									<th>제목</th>
-									<td class="text-align-left text-indent text-strong text-orange" colspan="3">${notice.title}</td>
-								</tr>
-								<tr>
-									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3">${notice.regdate}</td>
-								</tr>
-								<tr>
-									<th>작성자</th>
-									<td>${notice.writerId}</td>
-									<th>조회수</th>
-									<td>${notice.hit}</td>
-								</tr>
-								<tr>
-									<th>첨부파일</th>
-									<td colspan="3">${notice.files}</td>
-								</tr>
-								<tr class="content">
-									<td colspan="4">${notice.content}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-					<div class="margin-top text-align-center">
-						<a class="btn btn-list" href="/nlist.do">목록</a>
-						<a class="btn-text btn-default" href="nedit.do?nid=${notice.id}">수정</a>
-                    	<a class="btn-text btn-default" href="ndelete.do?nid=${notice.id}">삭제</a>
-					</div>
-					
-					<div class="margin-top">
-						<table class="table border-top-default">
-							<tbody>
-								
-								<tr>
-									<th>다음글</th>
-									<td colspan="3"  class="text-align-left text-indent">
-									<a class="text-blue text-strong" href="/ndetail.do?nid=${nextNotice.id}">${nextNotice.title}</a></td>
-								</tr>
-								
-									
-								
-								
-								<tr>
-									<th>이전글</th>
-									<td colspan="3"  class="text-align-left text-indent"><a class="text-blue text-strong" href="/ndetail.do?nid=${preNotice.id}">${preNotice.title}</a></td>
-								</tr>
-								
-								
-							</tbody>
-						</table>
-					</div>			
-					
-			</main>		
+
+			<main>
+                <h2 class="main title">공지사항 등록</h2>
+
+                <div class="breadcrumb">
+                    <h3 class="hidden">breadlet</h3>
+                    <ul>
+                        <li>home</li>
+                        <li>게시글 관리</li>
+                        <li>공지사항</li>
+                    </ul>
+                </div>
+
+                <form method="post" action="nreg.do" >
+                    <div class="margin-top first">
+                    	<input type="hidden" name="writerid" value="kwonpro">
+                        <h3 class="hidden">공지사항 입력</h3>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>제목</th>
+                                    <td class="text-align-left text-indent text-strong text-orange" colspan="3">
+                                        <input type="text" name="title" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>첨부파일</th>
+                                    <td colspan="3" class="text-align-left text-indent"><input type="file"
+                                            name="file" /> </td>
+                                </tr>
+                                <tr class="content">
+                                    <td colspan="4"><textarea class="content" name="content"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-align-right"><input class="vertical-align" type="checkbox" id="open" name="open" value="true"><label for="open" class="margin-left">바로공개</label> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="margin-top text-align-center">
+                        <input class="btn-text btn-default" type="submit" value="등록" />
+                        <a class="btn-text btn-cancel" href="nlist.do">취소</a>
+                    </div>
+                </form>
+
+            </main>
+		
 			
 		</div>
 	</div>
@@ -202,7 +179,8 @@
     <!-- ------------------- <footer> --------------------------------------- -->
 
 
- <footer id="footer">
+
+        <footer id="footer">
         <div class="content-container">
             <h2 id="footer-logo"><img src="/images/logo-footer.png" alt="모임정보"></h2>
 
