@@ -59,7 +59,6 @@ public class ProSiteController extends HttpServlet {
 		}else if(com.equals("/ndetail.do")){
 			command = new NDetailCommand();
 			command.execute(request, response);
-			System.out.println(com);
 			viewPage="notice/detail.jsp";
 		}else if(com.equals("/nwrite.do")){
 			viewPage="notice/reg.jsp";
