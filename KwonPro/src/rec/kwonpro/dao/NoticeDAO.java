@@ -12,4 +12,6 @@ public interface NoticeDAO {
 	public Notice preNotice(int id);
 	public void delete(int id);
 	public void update(Notice vo);
+	public ArrayList<Notice> recentlyList();
+	public int allPage();
 }

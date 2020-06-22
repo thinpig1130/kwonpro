@@ -13,6 +13,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property = "files" column = "FILES"/>
 </resultMap>
 
+<select id = "recentlyList" parameterType="int" resultMap="result">
+	<![CDATA[
+		SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY REGDATE DESC) NUM, NOTICE.* 
+		FROM NOTICE)
+		WHERE NUM < 6
+	]]>
+</select>
+
+<select id ="allPage" resultType="int">
+	<![CDATA[
+		SELECT TRUNC(COUNT(*)/10)+ 1 AS MAXPAGE
+		FROM NOTICE
+	]]>
+</select>
+
 <select id = "list" parameterType="int" resultMap="result">
 	<![CDATA[
 		SELECT ID, TITLE, WRITER_ID, CONTENT, REGDATE, HIT, FILES FROM(
@@ -67,10 +83,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <update id="update" parameterType="notice">
 	<![CDATA[
-	UPDATE NOTICE SET TITLE=#{title}, CONTENT=#{CONTNET}, FILES=#{FILES} 
+	UPDATE NOTICE SET TITLE=#{title}, CONTENT=#{content}, FILES=#{files} 
 	WHERE ID=#{id}
 	]]>
 </update>
-
 
 </mapper> 

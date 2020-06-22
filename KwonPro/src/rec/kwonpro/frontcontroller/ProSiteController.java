@@ -16,6 +16,7 @@ import rec.kwonpro.command.NEditCommand;
 import rec.kwonpro.command.NListCommand;
 import rec.kwonpro.command.NRegCommand;
 import rec.kwonpro.command.NUpdateCommand;
+import rec.kwonpro.command.RNListCommand;
 
 
 @WebServlet("*.do")
@@ -48,7 +49,7 @@ public class ProSiteController extends HttpServlet {
 		String com = uri.substring(conPath.length());
 		
 		if(com.equals("/index.do")) {
-			command = new NListCommand();
+			command = new RNListCommand();
 			command.execute(request, response);
 			viewPage = "home.jsp";
 		}else if(com.equals("/nlist.do")) {

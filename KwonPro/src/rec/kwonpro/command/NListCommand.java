@@ -1,10 +1,13 @@
 package rec.kwonpro.command;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.ibatis.session.SqlSession;
+
 import rec.kwonpro.common.MyUtils;
 import rec.kwonpro.dao.NoticeDAO;
 import rec.kwonpro.dto.Notice;
@@ -24,6 +27,8 @@ public class NListCommand implements Command {
 		SqlSession session = MyUtils.getSession(); 
 		NoticeDAO dao = session.getMapper(NoticeDAO.class);
 		ArrayList<Notice> dtos = dao.list(page);
+		int maxP = dao.allPage();
 		request.setAttribute("list", dtos);
+		request.setAttribute("maxpage", maxP);
 	}
 }

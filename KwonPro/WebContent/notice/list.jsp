@@ -189,7 +189,7 @@
 			</div>
 			<div class="indexer margin-top align-right">
 				<h3 class="hidden">현재 페이지</h3>
-				<div><span class="text-orange text-strong">1</span> / 1 pages</div>
+				<div><span class="text-orange text-strong">1</span> / ${maxpage} pages</div>
 			</div>
 
 			<div class="margin-top align-center pager">	
@@ -201,7 +201,9 @@
 		
 	</div>
 	<ul class="-list- center">
-		<li><a class="-text- orange bold" href="?page=1" >1</a></li>				
+		<c:forEach var="p" begin="1" end="${maxpage}" step="1">
+			<li><a class="-text- orange bold" href="?page=1" >${p}</a></li>
+		</c:forEach>				
 	</ul>
 	<div>
 		

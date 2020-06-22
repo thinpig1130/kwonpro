@@ -167,7 +167,7 @@
                         </table>
                     </div>
                     <div class="margin-top text-align-center">
-                        <input class="btn-text btn-default" type="submit" value="등록" />
+                        <input class="btn-text btn-default" type="submit" value="수정" />
                         <a class="btn-text btn-cancel" href="ndetail.do?nid=${notice.id}">취소</a>
                     </div>
                 </form>
